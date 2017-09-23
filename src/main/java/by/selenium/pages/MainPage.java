@@ -1,16 +1,20 @@
 package by.selenium.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class MainPage extends Page {
+
+	@FindBy(id = "mailbox__login")
+	private WebElement eLoginField;
+
+	@FindBy(id = "mailbox__password")
+	private WebElement ePasswordField;
 
 	private final String URL = "https://mail.ru";
 	private final String LOGIN = "tathtp";
 	private final String PASSWORD = "Klopik123";
-	private final By eLoginLocator = By.id("mailbox__login");
-	private final By ePasswordLocator = By.id("mailbox__password");
 
 	public MainPage(WebDriver driver) {
 		super(driver);
@@ -19,13 +23,12 @@ public class MainPage extends Page {
 	public void open() {
 		getDriver().get(URL);
 	}
-	
+
 	public InboxPage authorization() {
-		WebElement eLoginField = getDriver().findElement(eLoginLocator);
 		eLoginField.sendKeys(LOGIN);
-		WebElement ePasswordField = getDriver().findElement(ePasswordLocator);
 		ePasswordField.sendKeys(PASSWORD);
 		ePasswordField.submit();
+		sleep(10000);
 		return new InboxPage(driver);
 	}
 
